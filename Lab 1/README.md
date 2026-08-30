@@ -2,7 +2,8 @@
 
 _This project is to be done in teams of 2._
 
-**NAME OF BOTH COLLABORATOR(S) HERE**
+**Jaclyn Pham (cqp4) /
+Vasudha Devkota (vd269)**
 
 **THE MASTERWORK YOU DREW FROM THE HAT:**
 
