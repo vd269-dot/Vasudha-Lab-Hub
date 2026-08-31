@@ -70,7 +70,7 @@ and the people around it. If you're new to storyboarding, read
 [this explanation](https://www.nngroup.com/articles/storyboards-visualize-ideas/).
 
 **Include pictures of your storyboards here.**
-
+![Lab1 Storyboard](/Lab%201/lab1a-storyboard.png)
 
 Use the storyboards to decide what interaction to prototype.
 
