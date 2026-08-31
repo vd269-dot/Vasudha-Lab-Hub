@@ -1,64 +1,4 @@
-# Recreating the Masters of Interactive Light
-
-_This project is to be done in teams of 2._
-
-**Jaclyn Pham (cqp4) /
-Vasudha Devkota (vd269)**
-
-**THE MASTERWORK YOU DREW FROM THE HAT:**
-
----
-
-One way to understand greatness is to look to the greats. Just as painters learn
-the technique and artistry of the old masters by recreating their paintings, so
-too shall we come to understand computer-mediated interaction by recreating the
-interactive masterworks of our time.
-
-This week, every team will draw a different masterwork from a hat. Some are
-conceptual pieces, some are historical works, some are modern-day products —
-but they all share one thing: **their central mode of interaction is carried by
-light.** Think of Tinker Bell in the original stage production of *Peter Pan*,
-represented by nothing more than a darting circle of light from an off-stage
-mirror. There was no actor playing Tinker Bell; she existed entirely through the
-way the other characters interacted with that light.
-
-Your job is to recreate the *interaction* of the piece you drew — not to build a
-museum-grade replica, but to stage the moment that makes it what it is. Someone
-who knows your piece should watch your recreation and recognize it instantly.
-Someone who has never heard of it should walk away understanding what it is
-famous for.
-
-You will do this using the interaction staging techniques we will use all semester: a
-storyboard, some acting, a phone standing in as a controllable light (the
-*Tinkerbelle* tool), a hidden human "wizard" driving it, a costume, and a
-recorded video.
-
-*Make sure you read all the instructions and understand the whole activity
-before starting!*
-
-## Prep
-
-To start, you will need:
-
-1. Read about Git [here](https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F).
-2. Set up your own Github "Lab Hub" by forking the [Interactive-Lab-Hub repository](https://github.com/IRL-CT/Interactive-Lab-Hub). To get lab updates, simply use [GitHub's "Sync fork" button](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) when new content is available.
-
-3. Set up your `README.md` so it has your name and links to this lab. Learn to
-   format a README [here](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-4. **Draw your masterwork from the hat and write it at the top of this file.**
-   Whatever you drew is yours — lean into it.
-
-## Materials
-
-For this lab you will need:
-
-1. Paper, markers/pens, scissors
-2. A smartphone with a browser that can display a webpage (your stand-in "light")
-3. A computer to host the control webpage
-4. Found objects and materials to **costume your phone so it looks like the
-   device in your masterwork** — doll clothes, a paper lantern, a bottle, foil,
-   a cardboard shell, whatever it takes. Be resourceful.
-
+Recreating the Masters of Interactive Light
 ## Deliverables
 
 Submit all of the following in this lab folder of your Lab Hub, as links or
@@ -80,18 +20,31 @@ page.
 
 ## Part 0. Know Your Master
 
+Rain Room is a piece from 2012, created by Random International founded in 2005 by Hannes Kock and Florian Ortkrass. Random International is a postdigital art group exploring the human condition expressing the impact of technological development. They fabricate large-scale interactive pieces, and have a global team that operates through their headquarters in London. Random International prides themselves on experimenting interactions through natural and intuitive behaviour which instigates subjective experiences of consciousness. 
+
+The room uses 3D tracking cameras and sensors to detect where people are place in the 3D space, and shuts off the water directly above them. So one can walk straight through a downpour and stay completely dry.
+The core interaction is simple: the user moves, and the rain does not downpour on the user . Cameras read the user’s body as they navigate the space, and the ceiling turns off the valves above you, opening up a dry pocket that follows you around. Everyone can hear and smell the rain, and see it pouring down all around them, but no one gets wet.
+
 Before you prototype anything, get intimately acquainted with the piece you
 drew. Do real research. You are looking less for trivia than for the *shape of
 the interaction*:
 
-- What inputs are available to the user? What responses does the work give?
-- Who is present, and how does the piece color the relationships between them?
-- What is the piece famous for? What are its strengths and its weaknesses?
+- What inputs are available to the user? What responses does the work give? 
+Your body and your movement, picked up by overhead 3D cameras and sensors. The rain stops around the moving subject, preventing the user from getting rained on.
+- Who is present, and how does the piece color the relationships between them? 
+The visitors sharing the space of the installation when walking under the rain piece. 
+- What is the piece famous for? What are its strengths and its weaknesses? 
+The feeling of controlling the rain, of being dry in the middle of a storm. Its strength is how natural the motion detection is that reacts seamlessly with movement. 
 
   Sometimes the details of how the interaction worked are lost in history. Try filling it in with your imagination!
 
 **Describe your masterwork here, in your own words. What is the core interaction
 someone would recognize it by?**
+
+“Motion Liquid”: We rebuilt the feel of that relationship using a webcam and motion detection instead of water. The camera watches a still scene; when a person moves, their motion becomes a rippling, water-like displacement on screen. The person is the positive space the effect responds to, and the liquid ripple stands in for Rain Room’s water, the visible trace of the boundary between the body and the element reacting to it.
+
+
+
 
 ## Part A. Plan
 
@@ -99,12 +52,17 @@ For your masterwork, reconstruct the interaction as a scene:
 
 - **Setting:** Where and when does this interaction happen? (a jungle, a kitchen,
   a spaceship corridor, a nightclub, a harbor at night)
+ The room is arranged with a projector at the back, a screen in the center, and a camera mounted above pointing down. Soft, colorful blobs float scattered across the screen. Nothing is moving yet, so the elements sit still.
+
 - **Players:** Who is involved? Who else is present? Think through everyone in
   the setting, not just the primary user.
+A person steps into the camera’s detection zone and stands in front of the screen. The blobs react to their presence and get pushed away from their silhouette, opening up an empty space around the figure.
 - **Activity:** What is happening between the players and the light?
+The person moves through the zone, leaving ghosted trails behind them. A ripple effect follows their movement, and the blobs keep getting displaced around their shifting silhouette.
 - **Goals:** What is each player trying to do?
-
+The person in front of the camera wants to see themselves on the screen and figure out how their movement changes it. They’re playing, testing what happens when they move fast or slow, or when they hold still. 
 **Describe your setting, players, activity, and goals here.**
+The piece itself is trying to turn a plain camera feed into something that feels alive and whimsical.
 
 Now **sketch a 3 storyboards** of the interaction you are recreating. (The number may depend on the thing you drew, but stretch your thinking!) They
 don't need to be beautiful, but they must capture and communicate not only the behavior of the light, but how it affects
@@ -112,6 +70,7 @@ and the people around it. If you're new to storyboarding, read
 [this explanation](https://www.nngroup.com/articles/storyboards-visualize-ideas/).
 
 **Include pictures of your storyboards here.**
+
 
 Use the storyboards to decide what interaction to prototype.
 
@@ -183,45 +142,5 @@ Github, Twitter, a friend who lent you a lamp) that informed your recreation.
 
 ---
 
-# Part 2 — ReMastering the light
-
-*This describes the second week's work for this lab activity.*
-
-## Prep (before the next lab)
-
-Find three other groups. (How? Maybe Slack?) Visit their Lab Hub pages, watch their
-videos, and give them reactions and feedback: tell them what you saw happening,
-guess the masterwork and the goals of the characters, and ask about anything that
-wasn't clear.
-
-**Who were the other groups you kibitzed with? Add links to their project pages here.**
-**Summarize the feedback you got from your partners here.**
-
-## Remix, Update, or Critique the Master
-
-Now that you understand your masterwork from the inside, respond to it. Do the
-recreation again, but this time make it your own — pick one of these moves (or
-combine them):
-
-1. **Remix the modality.** Your recreation no longer has to (just) use light. Use
-   vibration, sound, motion, heat — whatever best carries the interaction. Feel
-   free to fork and modify the Tinkerbelle code. (Add your updates to this lab's folder!)
-2. **Update it.** Redesign the piece for today's context, or for a setting its
-   creators never imagined (the piece with roommates in the room, with children
-   present, on a phone, in a car).
-3. **Fix its weaknesses.** You identified this master's strengths and weaknesses
-   in Part 0 — now address a weakness, or push a strength further.
-
-We will grade this second pass with an emphasis on **creativity** and on how well
-your response engages with what your master was really doing.
-
-**Document everything here — especially the storyboard and video. Photos of the
-prototype are great too.**
-
----
 
 
-
-*Assignment lineage: this lab merges "Staging Interaction" (Interactive Lab Hub)
-with "Recreating the Masters" (Interaction Design Studio, Profs. Scott Minneman &
-Wendy Ju). Massive list of interactive light masterworks generated by Claude.ai.*
