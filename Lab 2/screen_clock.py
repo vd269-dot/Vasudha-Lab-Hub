@@ -61,11 +61,15 @@ backlight.switch_to_output()
 backlight.value = True
 
 while True:
-    # Draw a black filled box to clear the image.
-    draw.rectangle((0, 0, width, height), outline=0, fill=400)
-
-    #TODO: Lab 2 part D work should be filled in here. You should be able to look in cli_clock.py and stats.py 
-
-    # Display image.
-    disp.image(image, rotation)
-    time.sleep(1)
+# Draw a black filled box to clear the image.
+	draw.rectangle((0, 0, width, height), outline=0, fill=400)
+#TODO: Lab 2 part D work should be filled in here. You should be able to look in cli_clock.py and stats.py
+	current_time = time.strftime("%m/%d/%Y %H:%M:%S")
+	y = top
+	hi = "Hi Vasudha, it's currently"
+	draw.text((x, y), hi, font=font, fill="#FFFFFF")
+	y += font.size
+	draw.text((x, y), current_time, font=font, fill="#FFFFFF")
+# Display image.
+	disp.image(image, rotation)
+	time.sleep(1)
