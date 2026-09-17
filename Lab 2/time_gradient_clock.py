@@ -1,42 +1,48 @@
-# First-test sky clock for the Adafruit MiniPiTFT (ST7789).
+# Sky clock for the Adafruit MiniPiTFT (ST7789).
 #
-# Display hardware + color fill pattern: screen_test.py
-# Text drawing on the screen:           screen_boot_script.py
+# Display hardware: screen_test.py / screen_boot_script.py
+# Text drawing:     screen_boot_script.py
 #
-# FIRST ITERATION: no blending. The screen jumps between four solid
-# phase colors. Smooth color transitions will be added later.
+# Real clock hour picks the phase (morning / afternoon / evening).
+# A repeating 10-minute cycle only blends that phase's two colors.
+# Example: at 17:00 the phase is Afternoon, so 17:00-17:10 runs
+# #B0E0E6 -> #007BFF, then that same blue gradient loops.
 
 import time
 import digitalio
 import board
 from PIL import Image, ImageDraw, ImageFont
-
 import adafruit_rgb_display.st7789 as st7789
 
 # ---------------------------
-# Easily-editable phase colors (R, G, B)
+# Phase palettes (start -> end over 10 minutes)
 # ---------------------------
-MORNING = (255, 220, 0)       # yellow
-NOON = (255, 120, 0)          # orange
-AFTERNOON = (0, 90, 255)      # blue
-EVENING = (140, 0, 200)       # purple
+MORNING_START = (255, 210, 0)      # #FFD200
+MORNING_END = (247, 151, 30)       # #F7971E
 
-# A full "day" is compressed into 10 minutes so every phase shows up
-# quickly while testing. Later we can change this to 24 hours.
+AFTERNOON_START = (176, 224, 230)  # #B0E0E6
+AFTERNOON_END = (0, 123, 255)      # #007BFF
+
+EVENING_START = (225, 190, 231)    # #E1BEE7
+EVENING_END = (106, 27, 146)       # #6A1B92
+
+# How long one in-phase gradient takes, then it repeats.
 CYCLE_SECONDS = 600
+
+# Real-time hour ranges. 17:00 is Afternoon.
+MORNING_HOURS = range(6, 12)       # 6:00-11:59
+AFTERNOON_HOURS = range(12, 18)    # 12:00-17:59
+# Everything else (18:00-5:59) is Evening/Night.
 
 # ---------------------------
 # SPI + Display configuration
-# (same pins / ST7789 setup as screen_test.py and screen_boot_script.py)
 # ---------------------------
-cs_pin = digitalio.DigitalInOut(board.D5)     # GPIO5  (PIN 29)
-dc_pin = digitalio.DigitalInOut(board.D25)    # GPIO25 (PIN 22)
+cs_pin = digitalio.DigitalInOut(board.D5)
+dc_pin = digitalio.DigitalInOut(board.D25)
 reset_pin = None
-
 BAUDRATE = 64000000
 spi = board.SPI()
 
-# Same constructor as screen_test.py (there the object is named `display`).
 disp = st7789.ST7789(
     spi,
     cs=cs_pin,
@@ -49,73 +55,72 @@ disp = st7789.ST7789(
     y_offset=40,
 )
 
-# PIL canvas from screen_boot_script.py — required so we can draw text
-# on top of the color. Landscape: swap width/height and rotate 90.
 height = disp.width
 width = disp.height
 image = Image.new("RGB", (width, height))
 rotation = 90
 draw = ImageDraw.Draw(image)
 
-# Same font file as screen_boot_script.py; larger size so the clock is readable.
 font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 time_font = ImageFont.truetype(font_path, 36)
 label_font = ImageFont.truetype(font_path, 22)
 
-# Backlight (same GPIO as both example files)
 backlight = digitalio.DigitalInOut(board.D22)
 backlight.switch_to_output()
 backlight.value = True
 
 
-def phase_for(pos):
-    """Pick a solid color + name from which quarter of the 10-minute cycle we are in.
+def lerp(a, b, t):
+    return a + (b - a) * t
 
-    No interpolation yet — just a hard switch. Smooth blends come later.
-    """
-    if pos < 0.25:
-        return "Morning", MORNING
-    if pos < 0.50:
-        return "Noon", NOON
-    if pos < 0.75:
-        return "Afternoon", AFTERNOON
-    return "Evening", EVENING
+
+def mix_rgb(start, end, t):
+    """Blend two RGB tuples. t=0 is start, t=1 is end."""
+    r = int(lerp(start[0], end[0], t))
+    g = int(lerp(start[1], end[1], t))
+    b = int(lerp(start[2], end[2], t))
+    return (r, g, b)
+
+
+def phase_for_hour(hour):
+    """Pick palette from the real clock, not from the 10-minute cycle."""
+    if hour in MORNING_HOURS:
+        return "Morning", MORNING_START, MORNING_END, True
+    if hour in AFTERNOON_HOURS:
+        return "Afternoon", AFTERNOON_START, AFTERNOON_END, False
+    return "Evening", EVENING_START, EVENING_END, False
 
 
 def centered_text(text, font, y, fill):
-    """Draw text centered horizontally — same draw.text() call as screen_boot_script.py."""
     bbox = draw.textbbox((0, 0), text, font=font)
     text_width = bbox[2] - bbox[0]
     x = (width - text_width) // 2
     draw.text((x, y), text, font=font, fill=fill)
 
 
-print("10-minute phase clock. Four solid colors, no blending yet.")
-print("Ctrl+C to stop.")
+print("In-phase 10-minute gradient clock. Ctrl+C to stop.")
 
 try:
     while True:
-        # Real current time. pos walks 0.0 → 1.0 every 10 minutes, then repeats.
-        now = time.time()
-        pos = (now % CYCLE_SECONDS) / CYCLE_SECONDS
-        clock_text = time.strftime("%H:%M:%S")
-        phase_name, rgb = phase_for(pos)
+        local = time.localtime()
+        hour = local.tm_hour
+        clock_text = time.strftime("%H:%M:%S", local)
 
-        # Fill the whole canvas with the phase color.
-        # screen_test.py fills with display.fill(color565(r, g, b)), which
-        # wipes the screen and cannot sit under text. screen_boot_script.py
-        # fills with draw.rectangle(...) on a PIL image, then draws text,
-        # then disp.image(...). We use that second path so the clock shows.
+        # Align to the clock: 17:00 -> 17:10 is one full start->end blend.
+        # (minute % 10) makes windows :00-:10, :10-:20, :20-:30, ...
+        elapsed = (local.tm_min % 10) * 60 + local.tm_sec
+        pos = elapsed / float(CYCLE_SECONDS)
+
+        phase_name, start, end, dark_text = phase_for_hour(hour)
+        rgb = mix_rgb(start, end, pos)
+
         draw.rectangle((0, 0, width, height), outline=0, fill=rgb)
 
-        # Dark text on bright morning/noon, white text on afternoon/evening.
-        text_fill = "#000000" if pos < 0.50 else "#FFFFFF"
+        text_fill = "#000000" if dark_text else "#FFFFFF"
         centered_text(phase_name, label_font, 28, text_fill)
         centered_text(clock_text, time_font, 62, text_fill)
 
-        # Push the image to the MiniPiTFT (same call as screen_boot_script.py).
         disp.image(image, rotation)
-
         time.sleep(0.25)
 except KeyboardInterrupt:
     print("\nStopped.")
