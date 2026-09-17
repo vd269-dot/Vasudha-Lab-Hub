@@ -1,4 +1,4 @@
-# Sky clock for the Adafruit MiniPiTFT (ST7789).
+# ITERATION 3: Sky clock for the Adafruit MiniPiTFT (ST7789).
 #
 # Display hardware: screen_test.py / screen_boot_script.py
 # Text drawing:     screen_boot_script.py
