@@ -36,10 +36,11 @@
 
 1. **Physical Enclosure & Component Prep:**
    ![Anatomical Heart Mold Prep](IMG_7261.JPG)
+   https://drive.google.com/file/d/1kHAlO2viuLWQ0oJ0r-ydmFvkCOZ48SyJ/view?usp=drive_link
 
-2. **Screen Test & Service Verification:**
+3. **Screen Test & Service Verification:**
    ![Pi Screen Service with MAC Address](piscreen_mac_address.jpg)
-
+https://drive.google.com/file/d/1Bdy0pVBPvd7tgy4YtcwtGzWrggVfPs9e/view?usp=sharing
 ---
 
 ## Part D. Display Clock Demo
@@ -50,12 +51,12 @@
 ## Part E. Sketching & Brainstorming (Part 1)
 
 ### Concept: *Anatomical Chroma Heart Clock*
-Instead of traditional digits or clock hands, this design measures time through atmospheric light shift. An illuminated, translucent anatomical heart serves as the central visual centerpiece[cite: 1, 2]. 
+Instead of traditional digits or clock hands, this design measures time through atmospheric light shift. An illuminated, translucent anatomical heart serves as the central visual centerpiece. 
 
-- **Unit of Time:** Diurnal color shift (Dawn/Day/Dusk progression)[cite: 1, 2].
+- **Unit of Time:** Diurnal color shift (Dawn/Day/Dusk progression).
 - **Light Behavior:** 
-  - **Morning / Early Day:** Starts as a bright, clear white illumination, symbolizing fresh start and peak daylight[cite: 1, 2].
-  - **Evening / Late Day:** Gradually shifts into a deep blue hue as night approaches, reflecting circadian transition and wind-down time[cite: 1, 2].
+  - **Morning / Early Day:** Starts as a bright, clear white illumination, symbolizing fresh start and peak daylight[
+  - **Evening / Late Day:** Gradually shifts into a deep blue hue as night approaches, reflecting circadian transition and wind-down time
 
 ### Interaction & System Storyboard
 
