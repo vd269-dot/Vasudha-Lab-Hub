@@ -218,6 +218,9 @@ I then added the study guide’s response after transcription, giving the studen
 Find a partner, and *without sharing the script with your partner* try out the dialogue you've designed, where you (as the device designer) act as the device you are designing. Please record this interaction (for example, using Zoom's record feature).
 
 https://youtu.be/chCteH0AVxU
+
+
+
 \*\***Describe if the dialogue seemed different than what you imagined when it was acted out, and how.**\*\*
 
 Yes, as I expected my intended user to follow the storyboard script i had already created. Yet, they kept asking for study help on subjects beyond my technical threshold.
