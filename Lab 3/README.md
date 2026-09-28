@@ -111,6 +111,8 @@ The demo script also shows `--output-raw`, which streams audio to the speaker as
 
 \*\***Then answer: Is the same greeting, in these different voices, the same greeting? Describe one concrete way the voice changed what the utterance seemed to mean or who seemed to be speaking.**\*\*
 
+The English voice sounds more like a standard digital assistant, while the Welsh voice gives the same words a different character and makes the speaker feel like a different person. The different voices give the interactive device a different personality and gives the user a different feeling of whom they are interacting with.
+
 ## B. Speech to Text
 
 We use [faster-whisper](https://github.com/SYSTRAN/faster-whisper), a reimplementation of OpenAI's Whisper model that runs several times faster on CPU and does not require PyTorch. All processing happens on the Pi; nothing is sent to a server.
@@ -130,8 +132,28 @@ The transcript is not the interesting output here — the timings are. Run it ag
 Available sizes, smallest first: `tiny.en`, `base.en`, `small.en`, `medium.en`. The `.en` variants are English-only and faster than their multilingual counterparts at the same size.
 
 \*\***Record a few seconds of your own speech (`arecord -d 5 -f cd -c 1 -r 16000 test.wav`) and transcribe it with at least two model sizes. Report the real-time factor for each. At what point does the accuracy improvement stop being worth the delay, for a system that has to answer you?**\*\*
+### Speech-to-Text Model Comparison
+
+I recorded a 5-second sample of my speech and tested it with two Whisper model sizes.
+
+| Model      | Transcription | Real-Time Factor |
+| ---------- | ------------- | ---------------: |
+| `tiny.en`  | “Hi!”         |            0.82× |
+| `small.en` | “Hi!”         |            0.93× |
+
+Both models produced the same transcription. The `small.en` model was slightly slower, but it did not produce a different result in this test. For a system that needs to respond conversationally, I would prioritize the faster model unless the larger model provides a significant improvement in accuracy. In this test, the additional delay was not justified because there was no improvement in the transcription.
 
 \*\***Write your own script that verbally asks for a numerical input (a phone number, zipcode, number of pets) and records the answer the respondent provides.**\*\* Numbers are a good stress test — transcription systems make characteristic errors on digit strings, and you will want to know what they are before you design around them.
+### Numerical Input Script
+
+I created a shell script called `number_input.sh` that verbally asks the user to provide a phone number, records the response for 5 seconds, and then transcribes the recording using Whisper.
+
+I tested the script by providing a numerical response. The speech recognition system transcribed my response as:
+
+`1, 5, 3, 4.`
+
+This showed that numerical inputs can be challenging for the speech recognition system and can result in inaccurate transcription.
+
 
 ## C. Turn-taking: knowing when someone has stopped talking
 
@@ -155,6 +177,11 @@ Speak, pause, and watch it transcribe. Now change the endpointing threshold — 
 
 There is no correct value. A system that takes drink orders and a system that listens to someone think out loud want very different thresholds, and the right one depends on what your users are doing with their pauses.
 
+I found that the longer silence threshold made me more aware of my own pauses while speaking. I felt responsible for timing my pauses because I had to intentionally pause long enough for the system to recognize that I had finished speaking. This made the interaction feel less natural, because I was thinking about when the system would respond rather than just speaking normally.
+
+With a shorter silence threshold, the system responds more quickly, but it can also interpret a brief pause as the end of my turn. This showed me that the amount of silence the system requires changes how the conversation feels and how much responsibility the user has for managing the timing.
+
+
 ### The complete loop
 
 `echo_bot.py` puts the pieces together: it listens, endpoints, transcribes, and speaks a reply through Piper. The dialogue policy is deliberately trivial — it repeats what you said — so that everything you notice is a property of the timing rather than the content.
@@ -168,6 +195,8 @@ There is no correct value. A system that takes drink orders and a system that li
 Storyboard and/or use a Verplank diagram to design a speech-enabled device. (Stuck? Make a device that talks for dogs. If that is too stupid, find an application that is better than that.)
 
 \*\***Post your storyboard and diagram here.**\*\*
+https://drive.google.com/file/d/1_0PSRCCGF0jlipiRg4LmIrzELjGY7MrC/view?usp=sharing
+
 
 Write out what you imagine the dialogue to be. Use cards, post-its, or whatever method helps you develop alternatives or group responses.
 
@@ -175,11 +204,23 @@ Write out what you imagine the dialogue to be. Use cards, post-its, or whatever 
 
 Your script should include the pauses. Where does your device wait, and for how long? You now know from Part C that this is a parameter you have to choose, not something that happens for free.
 
+### Process
+
+I started by defining a student study scenario in which the student uses a speech-enabled study guide to get help with course material. I then mapped out the interaction from the initial system prompt, through the student’s spoken response, to the system’s transcription and follow-up options.
+
+A key focus of the storyboard was **turn-taking**. I wanted the student to be able to speak naturally and pause while thinking without the system cutting them off. Based on the earlier turn-taking experiments, I chose a **1.0-second silence threshold** and included the waiting and transcription states directly in the storyboard.
+
+I then added the study guide’s response after transcription, giving the student targeted options for what to do next, such as reviewing the VAD threshold questions or testing the echo bot. The final storyboard shows the complete interaction loop and emphasizes how the timing of the system affects the student’s experience.
+
+
 ## E. Acting out the dialogue
 
 Find a partner, and *without sharing the script with your partner* try out the dialogue you've designed, where you (as the device designer) act as the device you are designing. Please record this interaction (for example, using Zoom's record feature).
 
+https://youtu.be/chCteH0AVxU
 \*\***Describe if the dialogue seemed different than what you imagined when it was acted out, and how.**\*\*
+
+Yes, as I expected my intended user to follow the storyboard script i had already created. Yet, they kept asking for study help on subjects beyond my technical threshold.
 
 
 ---
