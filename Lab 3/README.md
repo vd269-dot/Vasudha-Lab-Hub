@@ -169,7 +169,9 @@ Storyboard and/or use a Verplank diagram to design a speech-enabled device. (Stu
 
 \*\***Post your storyboard and diagram here.**\*\*
 
-Write out what you imagine the dialogue to be. Use cards, post-its, or whatever method helps you develop alternatives or group responses.
+https://drive.google.com/file/d/1_0PSRCCGF0jlipiRg4LmIrzELjGY7MrC/view?usp=sharing
+
+
 
 \*\***Please describe and document your process.**\*\*
 
@@ -179,7 +181,11 @@ Your script should include the pauses. Where does your device wait, and for how 
 
 Find a partner, and *without sharing the script with your partner* try out the dialogue you've designed, where you (as the device designer) act as the device you are designing. Please record this interaction (for example, using Zoom's record feature).
 
-\*\***Describe if the dialogue seemed different than what you imagined when it was acted out, and how.**\*\*
+https://youtube.com/shorts/i9_GSAWGnFA?feature=share
+
+\*\[***Describe if the dialogue seemed different than what you imagined when it was acted out, and how.**\*\*
+]
+
 
 
 ---
