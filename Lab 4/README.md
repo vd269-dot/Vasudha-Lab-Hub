@@ -494,12 +494,47 @@ Document all the prototypes and iterations you have designed and worked on! Agai
 
 ## Deliverables \& Submission for Lab 4
 
-The deliverables for this lab are, writings, sketches, photos, and videos that show what your prototype:
-* "Looks like": shows how the device should look, feel, sit, weigh, etc.
-* "Works like": shows what the device can do.
-* "Acts like": shows how a person would interact with the device.
+# Lab 4: Interactive Dining Board
 
-For submission, the readme.md page for this lab should be edited to include the work you have done:
-* Upload any materials that explain what you did, into your lab 4 repository, and link them in your lab 4 readme.md.
-* Link your Lab 4 readme.md in your main Interactive-Lab-Hub readme.md. 
-* Labs are due on Mondays, make sure to submit your Lab 4 readme.md to Canvas.
+## Project Overview
+
+Our project explores how conductive materials and physical interactions can create playful, multisensory experiences. Our first prototype was a DJ-inspired setup in which touching jewelry and different conductive metals produced different sounds. Inspired by the capacitive touch sensor, we experimented with how everyday materials could become interactive inputs and turn touch into sound.
+
+We are now developing a dining board that builds on this concept. The goal is to bring interactive technology into the dining experience by using conductive materials and touch-based interactions to create an engaging and playful experience around food and sharing.
+
+## Prototype 1: Conductive DJ Setup
+
+Our first prototype was inspired by a DJ controller. We used jewelry and different conductive metals as interactive surfaces, with different materials producing different sounds when touched. This allowed us to explore how the capacitive touch sensor could detect contact and translate physical interactions into audio feedback.
+
+The prototype helped us experiment with the relationship between material, touch, and sound. It also demonstrated how ordinary objects can become interactive interfaces without relying on a conventional screen or button-based controller.
+
+## Prototype 2: Interactive Dining Board
+
+Building on our first prototype, we are now exploring an interactive dining board. Instead of using jewelry and metal objects in a DJ-style setup, we want to bring conductive interactions into a dining context.
+
+The dining board will explore how touching different conductive areas or objects can trigger different responses. This concept extends our initial experimentation with capacitive sensing into the context of eating, serving, and sharing food.
+
+### Looks Like
+
+The prototype takes the form of a physical dining board with designated conductive areas. These areas will act as interactive touchpoints, with the electronics integrated into or underneath the board where possible. The physical layout will be designed to make the interactive elements accessible and intuitive during a dining experience.
+
+### Works Like
+
+The capacitive sensor detects touch on conductive materials. Each touchpoint can be associated with a different response, building on our first prototype in which different conductive materials triggered different sounds. The dining board will connect these touch interactions to an output that makes the dining experience more interactive.
+
+### Acts Like
+
+A person interacts with the board by touching or engaging with its conductive areas during a dining activity. These actions trigger responses from the system, encouraging users to explore the board and discover how different interactions affect the experience. The intention is to make dining more playful and participatory.
+
+## Design Exploration and Iteration
+
+We are developing the dining board from our initial DJ-inspired prototype. Our first experiment helped us understand how conductive materials can function as inputs and how touch can trigger immediate feedback. The next stage focuses on adapting this interaction to a dining environment and considering how the placement of the conductive elements, the physical structure, and the output shape the user experience.
+
+We will explore different physical layouts for the board, considering the placement of the touchpoints, the arrangement of the electronics, and how people will interact with the object while eating or sharing food.
+
+## Reflection
+
+Our first prototype showed us that conductive materials can be used creatively as interactive inputs. We were able to explore how different materials and touch interactions could produce different sounds, turning jewelry and metal objects into a DJ-style interface.
+
+Moving toward a dining board challenges us to think about how this interaction can be incorporated into an everyday activity. We need to consider how users will discover the touchpoints, how the board will accommodate a dining activity, and how to position and protect the electronics. This iteration allows us to build on our initial experiments while exploring a new physical form and context for interaction.
+
