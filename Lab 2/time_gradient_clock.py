@@ -17,11 +17,11 @@ import adafruit_rgb_display.st7789 as st7789
 # ---------------------------
 # Phase palettes (start -> end over 10 minutes)
 # ---------------------------
-MORNING_START = (255, 210, 0)      # #FFD200
-MORNING_END = (247, 151, 30)       # #F7971E
+AFTERNOON_START = (255, 210, 0)      # #FFD200
+AFTERNOON_END = (247, 151, 30)       # #F7971E
 
-AFTERNOON_START = (176, 224, 230)  # #B0E0E6
-AFTERNOON_END = (0, 123, 255)      # #007BFF
+AAFTERNOON_START = (176, 224, 230)  # #B0E0E6
+AAFTERNOON_END = (0, 123, 255)      # #007BFF
 
 EVENING_START = (225, 190, 231)    # #E1BEE7
 EVENING_END = (106, 27, 146)       # #6A1B92

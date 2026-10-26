@@ -66,10 +66,11 @@ while True:
 #TODO: Lab 2 part D work should be filled in here. You should be able to look in cli_clock.py and stats.py
 	current_time = time.strftime("%m/%d/%Y %H:%M:%S")
 	y = top
-	hi = "Hi Vasudha, it's currently"
+	hi = "Mercer Labs, anyone?"
 	draw.text((x, y), hi, font=font, fill="#FFFFFF")
 	y += font.size
-	draw.text((x, y), current_time, font=font, fill="#FFFFFF")
+	sign = "Sign up for Cmd+Z Club"
+	draw.text((x,y),sign, font=font, fill="#FFFFFF")
 # Display image.
 	disp.image(image, rotation)
 	time.sleep(1)
