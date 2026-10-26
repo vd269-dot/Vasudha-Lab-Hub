@@ -131,8 +131,9 @@ pi@raspberrypi:~ $ ollama list
 | `qwen3.5:0.8b` | ~1.3 GB | text **and images**; the one we use in this lab |
 | `qwen3:0.6b` | ~0.5 GB | text only, smaller and faster (~16 tokens/s on a Pi 5) |
 
-\*\*\***Include a screenshot of `ollama list` showing your models.**\*\*\*
+[\*\*\***Include a screenshot of `ollama list` showing your models.**\*\*\*]:
 
+https://drive.google.com/file/d/1k7g5Ou1ShfNYJZxm1V-dQWvJpUUx2fVP/view?usp=drive_link
 
 ## Part B. 
 ### See: recognize people in real time with YOLO
@@ -157,8 +158,28 @@ Then press q to quit and run it again with a flag. Each one changes a single thi
 ```
 
 \*\*\***Include a short video or screenshots of the person detection.**\*\*\*
+it was really interesting to see the camera detect people! here is the link below
 
+https://drive.google.com/file/d/1k7g5Ou1ShfNYJZxm1V-dQWvJpUUx2fVP/view?usp=drive_link
+### Part B: Live YOLO Camera Experiments
 
+**Experiment 1: Default confidence threshold (`--headless`)**
+
+I tested live person detection using the USB webcam and YOLO26 nano model. The detector reported people with varying confidence scores, generally around 0.4–0.9. The person's detected position and bounding-box height changed during the test. Some frames reported zero objects, and the camera stream briefly failed during the experiment.
+
+**Experiment 2: Lower confidence threshold (`--conf 0.2`)**
+
+I lowered the confidence threshold to 0.2. The detector reported low-confidence detections around 0.22–0.32 and occasionally reported two or three people in a frame. Many frames still reported zero objects. A lower threshold allows more uncertain detections through, but can also increase false positives.
+
+**Experiment 3: Larger image size (`--imgsz 640`)**
+
+I ran the detector with an image size of 640. Many detections had confidence scores around 0.8–0.92, and some frames contained two detected people. Other frames reported zero objects. The detected person's position and bounding-box height varied during the test. The experiment showed that detections still varied even with the larger image size.
+
+**Three potential failure cases**
+
+1. **Missed detections:** Some frames reported zero objects. This may happen when the person is difficult to detect in a particular frame or the model is uncertain.
+2. **False positives:** Some frames reported an additional person with a lower confidence score. The model may have mistaken part of the scene for a person.
+3. **Inconsistent detections:** The number of detected people and confidence scores changed between frames. Movement, framing, lighting, and image quality may affect the results.
 ## Part C. 
 ### See more: hands and pose with MediaPipe
 
