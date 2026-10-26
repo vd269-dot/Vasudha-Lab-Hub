@@ -161,6 +161,9 @@ Then press q to quit and run it again with a flag. Each one changes a single thi
 it was really interesting to see the camera detect people! here is the link below
 
 https://drive.google.com/file/d/1k7g5Ou1ShfNYJZxm1V-dQWvJpUUx2fVP/view?usp=drive_link
+
+https://drive.google.com/file/d/1rTTiAmpOPXI9k2Z0WzClJn3wG4251Zjn/view?usp=drive_link
+
 ### Part B: Live YOLO Camera Experiments
 
 **Experiment 1: Default confidence threshold (`--headless`)**
@@ -205,6 +208,12 @@ Try the two main features of this script: 1) pinching for percentage control (th
 Consider how you might use this position based approach to create an interaction, and write how you might use it on either face, hand or body pose tracking.
 
 \*\*\***Include a screenshot or short video of the hand pose demo, and write how you might use face, hand or body pose tracking in your observant system.**\*\*\*
+https://drive.google.com/file/d/1JFQRewNdqm5Q3n4wLI2N63I2jW5ZNL1M/view?usp=drive_link
+
+I have created a similar tool before on touch designer, for people to use for recreational purposes, and would want to prototype something similar, find the link below!
+https://drive.google.com/file/d/1VFzUVXEHpSmKcY047d3zepNsBVpok22s/view?usp=sharing
+
+I'd use this on my next iteration to sense people/living things walking by windows to observe when I sleep.
 
 
 ## Part D. 
@@ -242,6 +251,23 @@ A 0.8B model is slow and sometimes wrong. It will invent events that are not in 
 <details>
   Q&A here
 </details>
+pi@raspberrypivasudhad:~/Vasudha-Lab-Hub/Lab 5 $ python ask_qwen.py "Tell me a bit about the history of Roosevelt Island."
+Roosevelt Island was originally built as a 19th-century lumber mill for the New York State Department of Commerce, which later became the foundation of the Statue of Liberty. The island's name honors President Theodore Roosevelt, who served as its first mayor and is now celebrated for his leadership in the development of this historic site.
+
+[qwen3.5:0.8b, 33.2 s]
+
+
+pi@raspberrypivasudhad:~/Vasudha-Lab-Hub/Lab 5 $ python ask_qwen.py "Tell me a bit about the history of Partk Slope."
+Partk Slope is a historic hill station located in the Himalayas, known for its ancient temples and traditional architecture dating back centuries. It was once a major pilgrimage site where monks and pilgrims gathered to seek blessings from the divine. The region's history is intertwined with the broader cultural traditions of the Tibetan people, who have maintained these spiritual practices for generations. Today, it remains an important destination for those interested in nature, culture, and religious heritage.
+
+[qwen3.5:0.8b, 16.9 s]
+pi@raspberrypivasudhad:~/Vasudha-Lab-Hub/Lab 5 $ 
+
+pi@raspberrypivasudhad:~/Vasudha-Lab-Hub/Lab 5 $ python ask_qwen.py "Tell me a bit about Vasudha Devkota."
+Vasudha Devkota, the founder of the Gurdwara Darbar, was a visionary leader who transformed the Sikh community into a global movement through his charismatic preaching and organizational work. He established the first Gurdwara in 1926 and founded the world's largest Sikh temple complex, which continues to serve millions today.
+
+[qwen3.5:0.8b, 12.1 s]
+pi@raspberrypivasudhad:~/Vasudha-Lab-Hub/Lab 5 $ 
 
 
 ## Part E. 
@@ -273,9 +299,73 @@ It watches for a minute, saves the log to `watch_log.txt` and asks Qwen the defa
 asking Qwen...
 
 Qwen (18.4 s):
-One person came in from the right, moved close to the camera, and left after about half a minute. ...
-```
+KeyboardInterrupt
 
+pi@raspberrypivasudhad:~/Vasudha-Lab-Hub/Lab 5 $ python ask_qwen.py "Tell me a bit about the history of Roosevelt Island."
+Roosevelt Island was originally built as a 19th-century lumber mill for the New York State Department of Commerce, which later became the foundation of the Statue of Liberty. The island's name honors President Theodore Roosevelt, who served as its first mayor and is now celebrated for his leadership in the development of this historic site.
+
+[qwen3.5:0.8b, 33.2 s]
+pi@raspberrypivasudhad:~/Vasudha-Lab-Hub/Lab 5 $ python ask_qwen.py "Tell me a bit about the history of Partk Slope."
+Partk Slope is a historic hill station located in the Himalayas, known for its ancient temples and traditional architecture dating back centuries. It was once a major pilgrimage site where monks and pilgrims gathered to seek blessings from the divine. The region's history is intertwined with the broader cultural traditions of the Tibetan people, who have maintained these spiritual practices for generations. Today, it remains an important destination for those interested in nature, culture, and religious heritage.
+
+[qwen3.5:0.8b, 16.9 s]
+pi@raspberrypivasudhad:~/Vasudha-Lab-Hub/Lab 5 $ python ask_qwen.py "Tell me a bit about Vasudha Devkota."
+Vasudha Devkota, the founder of the Gurdwara Darbar, was a visionary leader who transformed the Sikh community into a global movement through his charismatic preaching and organizational work. He established the first Gurdwara in 1926 and founded the world's largest Sikh temple complex, which continues to serve millions today.
+
+[qwen3.5:0.8b, 12.1 s]
+pi@raspberrypivasudhad:~/Vasudha-Lab-Hub/Lab 5 $ python yolo_to_qwen.py
+Loading yolo26n_ncnn_model for NCNN inference...
+17:34:07 2 person(s) at center/far, left/far
+qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in "/home/pi/venv/lib/python3.11/site-packages/cv2/qt/plugins"
+17:34:11 1 person(s) at center/far
+17:34:11 2 person(s) at center/far, center/far
+17:34:12 3 person(s) at center/close, center/far, right/far
+17:34:13 2 person(s) at center/far, right/close
+17:34:13 1 person(s) at center/far
+17:34:15 2 person(s) at center/far, center/far
+17:34:16 1 person(s) at center/far
+17:34:17 2 person(s) at center/far, left/far
+17:34:18 1 person(s) at center/close
+17:34:18 2 person(s) at center/far, left/far
+17:34:19 1 person(s) at left/far
+17:34:20 2 person(s) at center/far, left/far
+17:34:20 2 person(s) at left/far, center/close
+17:34:21 1 person(s) at center/close
+17:34:22 1 person(s) at center/far
+17:34:24 1 person(s) at right/far
+17:34:25 1 person(s) at center/far
+17:34:26 2 person(s) at right/far, center/far
+17:34:26 1 person(s) at right/far
+17:34:27 nobody
+17:34:30 1 person(s) at center/close
+17:34:31 1 person(s) at center/far
+17:34:32 nobody
+17:34:32 1 person(s) at left/far
+17:34:34 1 person(s) at center/close
+17:34:35 1 person(s) at left/close
+17:34:36 1 person(s) at center/close
+17:34:36 1 person(s) at left/close
+17:34:37 nobody
+17:34:38 1 person(s) at center/close
+17:34:38 1 person(s) at left/close
+17:34:39 1 person(s) at center/close
+17:34:40 nobody
+17:34:41 1 person(s) at center/close
+17:34:49 1 person(s) at left/close
+17:34:53 2 person(s) at center/close, right/close
+17:34:55 2 person(s) at right/close, left/close
+17:34:55 1 person(s) at left/close
+17:34:56 1 person(s) at center/close
+17:34:57 2 person(s) at center/close, left/close
+17:34:58 1 person(s) at center/close
+17:34:59 1 person(s) at left/close
+
+43 lines saved to watch_log.txt
+asking Qwen...
+
+Qwen (28.1 s):
+There were initially 2 people at the center/far left, then 1 person moved to the center/far, followed by a group of 3 people moving to the center/close and right/far. Later, two people appeared on the right side, one moved to the center/close, and finally, no one was seen in the room for a period.
+pi@raspberrypivasudhad:~/Vasudha-Lab-Hub/Lab 5 $ 
 ---
 
 # Lab 5 Part 2: Overnight Sensation
