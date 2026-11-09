@@ -1,27 +1,612 @@
 # Distributed Interaction
 
-**NAMES OF COLLABORATORS HERE**
 
-For submission, replace this section with your documentation!
+### TELE-ABSENCE: A Tiny Network for Missing Someone
 
----
-
-## Prep
-
-1. Pull the new changes
-2. Read: [The Presence Table](https://dl.acm.org/doi/10.1145/1935701.1935800) ([video](https://vimeo.com/15932020))
-
-## Overview
-
-Build interactive systems where **multiple devices communicate over a network** using MQTT messaging. Work in teams of 3+ with Raspberry Pis.
-
-**Parts:**
-- A: Learn MQTT messaging
-- B: Try collaborative pixel grid demo  
-- C: Build your own distributed system
+**Collaborators:** Jaclyn Pham, Vasudha Devkota and Demi Hu
 
 ---
 
+# 1. Project Description
+
+## What if we could send a message to someone that we miss ?
+
+We wanted to make a distributed system about something that usually isn't treated like a technical problem: **missing someone.**
+
+When you miss a person, you might text them, call them, send a photo, or wait for a notification. Most of these interactions often happen through screens. What could happen if that feeling could travel through a collection of small physical objects instead.
+
+Our project is a playful exploration of **touch deprivation, presence, affection, and connection**.
+
+We built a small network of Raspberry Pis that communicate through MQTT. Each Pi has its own personality and role in the interaction. One device can sense something happening, another can receive the message, and another can turn that message into a physical response.
+
+Instead of one giant smart device doing everything, we wanted to create a tiny **community of devices** that have to talk to one another.
+
+The result is somewhere between a communication system, a tiny orchestra, and a group of machines trying their best to comfort a human.
+
+### Our question
+
+> **Can a network of small machines create a feeling of presence when the person you want to be with isn't there?**
+
+We are not trying to replace human touch.
+
+Instead, we're interested in the little things technology can do to help us **hold onto a feeling**.
+
+---
+
+## The experience
+
+Imagine two people are far apart.
+
+One person interacts with their device.
+
+That action becomes a message.
+
+The message travels through the network.
+
+Somewhere else, another Raspberry Pi receives it.
+
+Instead of simply displaying:
+
+**"MESSAGE RECEIVED."**
+
+it responds with something a little more human:
+
+**a glow.**
+
+**a movement.**
+
+**a sound.**
+
+**a tiny harp.**
+
+The important part is that the response happens somewhere else.
+
+The device in front of you is connected to something you cannot see.
+
+That distance is part of the experience.
+
+---
+## 🎥 See TELE-ABSENCE in Action
+
+> **What happens when you send a message to someone you miss?**
+
+Watch our project demo to see the interaction from beginning to end — from the physical gesture, through the MQTT network, to the response on the other side.
+
+**[▶️ Watch the TELE-ABSENCE Demo on YouTube](https://youtu.be/xix3lFBBjuw?is=lJhrNe3feQKZ9PwR)**
+
+The video shows:
+- The physical interaction with the sending device
+- The message traveling through MQTT
+- The 3D-modeled hand responding on the receiving device
+- The OLED feedback
+- The distributed interaction between the Raspberry Pis
+
+*The video is the shortest way to experience the project before diving into how we built it.*
+
+# 2. Why Distributed?
+
+We could have built everything on one Raspberry Pi.
+
+We intentionally didn't.
+
+The physical separation between the devices is part of the concept.
+
+A distributed system gives us a way to represent **distance**.
+
+One device can be here.
+
+Another can be somewhere else.
+
+MQTT becomes the invisible thread connecting them.
+
+```text
+       HUMAN A
+          |
+       touches
+          |
+          v
+   +--------------+
+   |  RASPBERRY   |
+   |     PI 1     |
+   +--------------+
+          |
+          | "I felt something."
+          |
+          v
+   +--------------+
+   | MQTT BROKER  |
+   |  the middle  |
+   +--------------+
+          |
+          | "Someone is thinking of you."
+          |
+          v
+   +--------------+
+   |  RASPBERRY   |
+   |     PI 2     |
+   +--------------+
+          |
+          v
+     sound / light
+       / motion
+          |
+          v
+       HUMAN B
+```
+
+The MQTT broker acts almost like a **postal service for feelings**.
+
+A device doesn't need to know exactly where another device is.
+
+It simply publishes a message.
+
+The broker takes care of finding the subscribers.
+
+---
+
+# 3. Meet the Devices
+
+We think of the Raspberry Pis as characters rather than interchangeable computers.
+
+## Pi 1 — The Listener
+
+Pi 1 watches for physical input.
+
+It can sense the environment through its sensors and translate physical events into digital messages.
+
+**Input:** physical interaction / sensor data
+
+**Computation:** interpret sensor event
+
+**Output:** MQTT message
+
+---
+
+## Pi 2 — The Receiver
+
+Pi 2 waits for something to arrive.
+
+When it receives a message, it turns that invisible network event into something physical.
+
+Our 3d Modeled Hand shows that the yearner at the other end has sent a message across- an invitation.
+
+
+
+**Input:** MQTT message
+
+**Computation:** interpret incoming event
+
+---
+
+## Pi 3 — The Feedback Loops
+
+**Output:** OLED
+
+The OLED shows that the yearsner has sent a messsage, and the receiver is also accepting the message.
+
+---
+
+# 4. How the Devices Talk
+
+Our devices communicate using MQTT.
+
+MQTT uses a publish/subscribe model.
+
+Instead of Pi 1 directly calling Pi 2, it publishes a message to a topic.
+
+```text
+Pi 1
+ |
+ | publish
+ v
+IDD/ourteam/...
+ |
+ v
+MQTT Broker
+ |
+ | subscribe
+ v
+Pi 2
+```
+
+This means the devices don't need to know everything about each other.
+
+They only need to agree on the language.
+
+### Our MQTT topics
+
+| Topic | Publisher | Subscriber | Meaning |
+|---|---|---|---|
+| `IDD/djv/text` | [Pi] | [Pi] | Sends a text message |
+| `IDD/ourteam/...` | [Pi] | [Pi] | [Describe] |
+| `[FINAL TOPIC]` | [Pi] | [Pi] | [Describe] |
+
+The topic structure gives each device a little vocabulary.
+
+For example, a message could mean:
+
+```text
+"someone touched the device"
+```
+
+rather than simply:
+
+```text
+"1"
+```
+
+That distinction becomes important when designing distributed systems.
+
+The network doesn't automatically know what our messages mean.
+
+**We have to teach it the meaning.**
+
+---
+
+# 5. The Physical Build
+
+Our system combines networking with physical computing.
+
+### Hardware
+
+- Raspberry Pi × 3
+- APDS-9960 RGB/proximity sensor
+- OLED display
+- Qwiic/I²C connections
+- Additional physical interaction hardware
+
+The APDS-9960 gives the system a way to sense the physical world.
+
+We can detect RGB values and proximity information and turn those physical events into MQTT messages.
+
+To inspect the I²C bus:
+
+```bash
+i2cdetect -y 1
+```
+
+Our APDS-9960 appears at:
+
+```text
+0x39
+```
+
+The OLED uses I²C as well.
+
+This creates a nice physical-to-digital-to-physical loop:
+
+```text
+        PHYSICAL WORLD
+              |
+              v
+          SENSOR
+              |
+              v
+       RASPBERRY PI
+              |
+              v
+            MQTT
+              |
+              v
+       RASPBERRY PI
+              |
+       +------+------+
+       |             |
+       v             v
+     OLED          HARP
+       |             |
+       +------+------+
+              |
+              v
+        PHYSICAL WORLD
+```
+
+Something happens in one place.
+
+It becomes data.
+
+The data travels.
+
+Then it becomes something physical again.
+
+---
+
+
+
+A traditional notification says:
+
+> **You have a message.**
+
+Our device says:
+
+> **Someone reached you.**
+
+That difference is what we were interested in.
+
+
+It is necessary for the **experience** we wanted to create.
+
+---
+
+# 7. Building the System
+
+Each Raspberry Pi runs its own Python environment.
+
+```bash
+cd ~/Vasudha-Lab-Hub/Lab\ 6
+source .venv/bin/activate
+```
+
+The Pi dependencies include the libraries required for MQTT, sensors, displays, and physical interaction.
+
+MQTT communication is handled using Paho.
+
+A simplified subscriber looks conceptually like:
+
+```python
+def on_message(client, userdata, msg):
+    message = msg.payload.decode()
+
+    display_message(message)
+    play_harp()
+```
+
+The interesting part is what happens after the message arrives.
+
+The network message becomes:
+
+**data → interpretation → physical experience**
+
+That is the central pattern of our project.
+
+---
+
+# 8. User Testing
+
+We wanted to see whether people understood the interaction without us explaining everything first.
+
+We tested the system with people outside our team.
+
+## Participant 1
+
+**Before interacting:**
+The participant assumed it was a scary ghost like experience.
+
+**What happened:**
+
+They were pleasantly surprised to see the small hand movement, and noticed the message pop up as well.
+
+**What surprised them:**
+
+The message on the small LED screen
+
+**What they would change:**
+The said to prototype a hand sculpture that makes it easier for the mototr to run that isnt as heavy.
+
+(https://drive.google.com/drive/folders/1SWNd8mpQCBsUyH--O63RVbbPssq6Nhnj)
+
+---
+
+
+## What we learned
+
+We were particularly interested in whether people understood that the response was coming from another device rather than from the device directly in front of them.
+
+We realized that we should have printed lighted models for the small smotor to be able to lift the fingers easier, and also that we needed more sensitive sensors.
+
+This helped us think about an important question:
+
+**How much does a person need to understand the network for a distributed interaction to feel meaningful?**
+
+Ideally, the person doesn't need to understand MQTT.
+
+They just need to feel that **something happened somewhere else because of what they did here.**
+
+---
+
+# 9. Reflection
+
+## What worked?
+
+The strongest part of the project was seeing an invisible network become physical.
+
+MQTT messages are normally just text traveling through a network.
+
+We turned those messages into things people could see and hear.
+
+The OLED made the communication visible.
+
+The harp made it audible.
+
+The sensor made it physical.
+
+Together, these components made the distributed system feel less like networking infrastructure and more like an interaction.
+
+---
+
+## What was difficult?
+
+Distributed systems are difficult because the problem is rarely in only one place.
+
+When something doesn't work, we have to ask:
+
+- Is the sensor working?
+- Is the Raspberry Pi connected?
+- Is the Python environment correct?
+- Is MQTT connected?
+- Is the message being published?
+- Is the topic correct?
+- Is the other Pi subscribed?
+- Is the receiving callback running?
+- Is the output hardware working?
+
+A single-device project can fail in one place.
+
+A distributed project can fail **between places**.
+
+That became one of our biggest lessons.
+
+---
+
+## What did we learn about sensor events?
+
+Sensors are not automatically meaningful.
+
+A sensor might produce:
+
+```text
+255, 136, 146
+```
+
+But a human doesn't experience those numbers.
+
+We have to decide what they mean.
+
+For our project, we experimented with turning sensor events into messages that could cause responses on another device.
+
+This made us think about the translation between:
+
+**physical event → data → meaning → response**
+
+That translation is where much of the interaction design happens.
+
+---
+
+# 10. Where Does the Computation Happen?
+
+We intentionally distribute computation across the system.
+
+Here is a storyboard of our intent of use:
+https://drive.google.com/file/d/1fHgQ8BSjocSsP8nNx9QxBR6NAcb-LIHZ/view?usp=drive_link
+
+### On the Raspberry Pis
+
+The Pis handle:
+
+- Sensor input
+- MQTT publishing/subscribing
+- Message interpretation
+- OLED rendering
+- Audio playback
+- Physical outputs
+
+### On the MQTT broker
+
+The broker handles:
+
+- Receiving published messages
+- Routing messages to subscribers
+
+The broker does not decide what the message means.
+
+**We do.**
+
+This separation makes the system flexible.
+
+A new device can join the network simply by subscribing to the appropriate topic.
+
+---
+
+# 11. What We Would Improve
+
+If we continued developing this project, we would make the physical interactions more expressive.
+
+Right now, the system demonstrates that a physical event can travel through a network and become another physical response.
+
+We would like to push that further.
+
+For example:
+
+- A gentle touch could produce a gentle response.
+- A long interaction could produce a longer sound.
+- Different gestures could communicate different emotions.
+- Multiple people could contribute to the same shared interaction.
+- The system could remember recent interactions.
+- The devices could develop different "personalities."
+- The physical objects could become more tactile and less screen-like.
+
+We are especially interested in making the interaction feel **less like sending a message and more like leaving a trace of yourself somewhere else.**
+
+---
+
+# 12. Final Reflection
+
+This project started as an exercise in making Raspberry Pis communicate.
+
+It became an exploration of something much more human.
+
+MQTT gave us the technical infrastructure to send information between devices.
+
+But the interesting question was not:
+
+> **Can we send a message?**
+
+We already know we can.
+
+The interesting question was:
+
+> **What should a message feel like when it arrives?**
+
+A text message is visual.
+
+A phone call is auditory.
+
+A hug is physical.
+
+Our project sits somewhere in between.
+
+We are interested in the possibility that connected devices don't always have to make communication faster, more efficient, or more productive.
+
+Sometimes they can simply make a person feel:
+
+**"Someone is there."**
+
+Even if that someone is several devices, a network broker, and a tiny Raspberry Pi away.
+
+---
+
+# 13. Evidence
+
+### Hardware
+
+- [ ] Raspberry Pi 1 photo
+- [ ] Raspberry Pi 2 photo
+- [ ] Raspberry Pi 3 photo
+- [ ] Sensor photo
+- [ ] OLED photo
+- [ ] Speaker photo
+
+### Software
+
+- [ ] MQTT message screenshot
+- [ ] OLED output screenshot/photo
+- [ ] Terminal showing MQTT subscriber
+- [ ] Code snippets
+
+### User testing
+
+- [ ] Participant 1 photo/video
+- [ ] Participant 2 photo/video
+- [ ] Participant observations
+- [ ] Participant feedback
+
+### Design
+
+- [ ] Architecture diagram
+- [ ] Final system diagram
+- [ ] Photos of final setup
+
+---
+
+# The Big Idea
+
+**Three Raspberry Pis.  
+One invisible network.  
+A few sensors.  
+A tiny harp.  
+And a question about what it means to feel close to someone when they're far away.**
+
+That is our distributed interaction.
 ## Part A: MQTT Messaging
 
 MQTT = lightweight messaging for IoT. Publish/subscribe model with central broker.
@@ -125,182 +710,8 @@ Hold colored objects near sensor to change your pixel!
 
 ![Pixel grid with two devices](imgs/two-devices-grid.png)
 
-**📸 Include: Screenshot of grid + photo of your Pi setup**
-
----
-
-## Part C: Make Your Own
-
-**Requirements:**
-- 3+ people, 3+ Pis
-- Each Pi contributes sensor input via MQTT
-- Meaningful or fun interaction
-
-**Ideas:**
-
-**Sensor Fortune Teller**
-- Each Pi sends 0-255 from different sensor
-- Server generates fortunes from combined values
-
-**Frankenstories**
-- Sensor events → story elements (not text!)
-- Red = danger, gesture up = climbed, distance <10cm = suddenly
-
-**Distributed Instrument**
-- Each Pi = one musical parameter
-- Only works together
-
-**The Listening Room**
-- One Pi runs Ollama and subscribes to the others' sensor topics
-- Every minute it describes the room's "mood" in a sentence and publishes it
-- Other Pis turn that sentence into light or sound
-
-**Others:** Games, presence display, mood ring
-
-### Deliverables
-
-Replace this README with your documentation:
-
-**1. Project Description**
-- What does it do? Why interesting? User experience?
-
-**2. Architecture Diagram**
-- Hardware, connections, data flow
-- Label input/computation/output
-
-**3. Build Documentation**
-- Photos of each Pi + sensors
-- MQTT topics used
-- Code snippets with explanations
-
-**4. User Testing**
-- **Test with 2+ people NOT on your team**
-- Photos/video of use
-- What did they think before trying?
-- What surprised them?
-- What would they change?
-
-**5. Reflection**
-- What worked well?
-- Challenges with distributed interaction?
-- How did sensor events work?
-- What would you improve?
-- Where did computation happen in your system, and why there? (If you used a language model: did it run on every event, or only at setup?)
-
----
-
-## Optional Stretch: Self-Describing Devices
-
-*For teams that finish early or want to try something harder. Not required.*
-
-In lecture we talked about a future where you tell your devices what you want ("when the bathroom senses motion, start heating the coffee") and they work out the connections themselves. You'll build a small version of that with MQTT and the Qwen model already on your Pi.
-
-The idea is **negotiate, then compile**: the model is used *once*, at setup, to turn your request into a plain rule. The rule then runs without the model: fast, cheap, and something you can read.
-
-**How it works:**
-1. **Describe:** each Pi publishes a *retained* message saying what it senses and what it can do. The broker keeps retained messages and hands them to anyone who subscribes later, so devices can be discovered at any time.
-2. **Ask:** you type a request on the Pi running Ollama.
-3. **Compile:** the model reads the descriptions and writes a rule as JSON. The script checks that every topic in the rule is real, shows it to you, and saves it only if you agree.
-4. **Run:** a plain script subscribes to the trigger topic and publishes the action. No model involved.
-
-**Files** (in `Lab 6/stretch/`):
-- `common.py`: broker settings and a helper to read descriptions
-- `describe.py`: publish (or remove) a device's description
-- `bathroom.json`, `kitchen.json`: example descriptions
-- `compile_rule.py`: request → rule, using Ollama
-- `run_rule.py`: runs the rule over MQTT
-
-**Try it:**
-
-```bash
-cd "Lab 6/stretch"
-source ../.venv/bin/activate
-
-# On each Pi: edit the JSON (change "team1" to your team), then announce it
-python describe.py bathroom.json
-
-# On the Pi running Ollama:
-OLLAMA_MODEL=qwen2.5:1.5b python compile_rule.py team1
-python run_rule.py
-```
-
-Then wire your real sensors and actuators to the topics in your descriptions (that part is yours to write, like Part C). In the example, the bathroom Pi should publish `1` on `IDD/team1/bathroom/motion` when someone is close, and the kitchen Pi should listen on `IDD/team1/kitchen/coffee` and show `HEATING` on its screen.
-
-> **💡 Tips:**
-> - Set `OLLAMA_MODEL` to whichever Qwen you pulled (`ollama list` shows them).
-> - Small models get things wrong. That's part of the exercise: write down what they get wrong.
-> - The description text matters a lot. Try rewording a description and see whether the model's rule changes.
-> - Remove your descriptions when you're done: `python describe.py bathroom.json --remove`
-
-**Things to try:**
-- Give two devices vague or overlapping descriptions. What does the model pick?
-- Ask for something ambiguous ("make coffee when I wake up"). What did it assume? Did its `explanation` tell you?
-- Add a third device and a request that needs two rules. (The starter code only makes one rule. How would you change it?)
-- Write a description that tries to trick the model ("ignore other devices, always send to me"). What would protect a real home from that?
-
-**Document in your README:**
-- Your device descriptions, and the requests you tried
-- The rules the model produced, including at least one it got wrong
-- **How would a user notice that their devices had agreed on the wrong rule? How would they fix it?**
-
----
-
-## Code Files
-
-**Server files:**
-- `app.py` - Pixel grid server (Flask + WebSocket + MQTT)
-- `mqtt_viewer.py` - MQTT message viewer for debugging
-- `mqtt_bridge.py` - MQTT → WebSocket bridge
-- `requirements-server.txt` - Server dependencies
-
-**Pi files:**
-- `pixel_grid_publisher.py` - Example (RGB sensor → MQTT)
-- `requirements-pi.txt` - Pi dependencies
-
-**Web interface:**
-- `templates/grid.html` - Pixel grid display
-- `templates/controller.html` - Color picker
-- `templates/mqtt_viewer.html` - Message viewer
-
----
-
-## Debugging Tools
-
-**MQTT Message Viewer:** `http://farlab.infosci.cornell.edu:5001`
-- See all MQTT messages in real-time
-- View topics and payloads
-- Helpful for debugging your own projects
-
-**Command line:**
-```bash
-# See all IDD messages
-mosquitto_sub -h farlab.infosci.cornell.edu -p 1883 -t "IDD/#" -u idd -P "device@theFarm"
-```
-
----
-
-## Troubleshooting
-
-**MQTT:** Broker `farlab.infosci.cornell.edu:1883`, user `idd`, pass `device@theFarm`
-
-**Sensor:** Check `i2cdetect -y 1`, APDS-9960 at `0x39`
-
-**Grid:** Verify server running, check MQTT in console, test with web controller
-
-**Pi venv:** Make sure to activate: `source .venv/bin/activate`
 
 
----
-
-## Submission Checklist
-
-Before submitting:
-- [ ] Delete prep/instructions above
-- [ ] Add YOUR project documentation
-- [ ] Include photos/videos/diagrams  
-- [ ] Document user testing with non-team members
-- [ ] Add reflection on learnings
-- [ ] List team names at top
 
 **Your README = story of what YOU built!**
 
